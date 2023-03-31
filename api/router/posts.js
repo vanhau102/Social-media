@@ -1,11 +1,11 @@
 import express from 'express';
+import { addPost, getPosts } from '../controllers/post.js';
 
 const router = express.Router();
 
 
-router.get("/test", (req, res) => {
-    res.send('nay la posts ne');
-})
+router.get("/", getPosts);
+router.post("/", addPost);
 
 
 

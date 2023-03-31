@@ -1,12 +1,35 @@
+import { useContext, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import './share.scss';
 import Image from '../../assets/img.png';
 import Map from '../../assets/map.png';
 import Friend from '../../assets/friend.png';
-import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
+import { makeRequest } from '../../httpRequest';
 
 const Share = () => {
+    const [file, setFile] = useState(null);
+    const [desc, setDesc] = useState(null);
+
     const { currentUser } = useContext(AuthContext);
+
+    const queryClient = useQueryClient();
+    const mutation = useMutation({
+        mutationFn: (newPost) => {
+            return makeRequest.post('/posts', newPost);
+        },
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ['posts'] });
+        },
+    });
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        mutation.mutate({ desc });
+    };
+
     return (
         <div className='share'>
             <div className='container'>
@@ -15,6 +38,7 @@ const Share = () => {
                     <input
                         type='text'
                         placeholder={`What's on your mind ${currentUser.name}?`}
+                        onChange={(e) => setDesc(e.target.value)}
                     />
                 </div>
                 <hr />
@@ -24,6 +48,7 @@ const Share = () => {
                             type='file'
                             id='file'
                             style={{ display: 'none' }}
+                            onChange={(e) => setFile(e.target.files[0])}
                         />
                         <label htmlFor='file'>
                             <div className='item'>
@@ -41,7 +66,7 @@ const Share = () => {
                         </div>
                     </div>
                     <div className='right'>
-                        <button>Share</button>
+                        <button onClick={handleClick}>Share</button>
                     </div>
                 </div>
             </div>
