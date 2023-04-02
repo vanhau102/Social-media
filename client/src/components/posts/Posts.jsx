@@ -18,7 +18,7 @@ function Posts() {
                 ? ' Something went wrong!'
                 : isLoading
                 ? ' Loading...'
-                : data.map((post, index) => <Post post={post} key={index} />)}
+                : data.map((post, index) => <Post post={post} key={post.id} />)}
         </div>
     );
 }

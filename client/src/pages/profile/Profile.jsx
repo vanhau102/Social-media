@@ -8,7 +8,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import profile from './profile.scss';
+import './profile.scss';
 import Posts from '../../components/posts';
 
 function Profile() {

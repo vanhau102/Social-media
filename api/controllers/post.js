@@ -9,9 +9,9 @@ export const getPosts = (req, res) => {
     jwt.verify(token, "secretKey", (err, userInfo) => {
         if (err) return res.status(403).json("Token is not valid!");
 
-        const q = `select  p.*, u.id as userId , name, profilePic , followedUserId from posts as p 
-        left join users as u on (u.id = p.userId) join relationships as r on ( p.userId = r.followerUserId) 
-        where r.followedUserId = ? or p.userId = ? order by p.createdAt  desc`
+        const q = `SELECT p.*, u.id AS userId, name, profilePic FROM posts AS p JOIN users AS u ON (u.id = p.userId)
+        LEFT JOIN relationships AS r ON (p.userId = r.followedUserId) WHERE r.followerUserId= ? OR p.userId =?
+        ORDER BY p.createdAt DESC`
         db.query(q, [userInfo.id, userInfo.id], (err, data) => {
             if (err) return res.status(500).json(err);
             return res.status(200).json(data);
@@ -31,7 +31,7 @@ export const addPost = (req, res) => {
         const values = [
             req.body.desc,
             req.body.img,
-            moment(Date.now()).format("YYYY-MM-DDT HH:mm:ss"),
+            moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
             userInfo.id
         ]
         db.query(q, [values], (err, data) => {

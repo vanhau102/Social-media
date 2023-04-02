@@ -1,7 +1,7 @@
 import Posts from '../../components/posts/Posts';
 import Share from '../../components/share/Share';
 import Stories from '../../components/stories/Stories';
-import home from './home.scss';
+import './home.scss';
 
 function Home() {
     return (

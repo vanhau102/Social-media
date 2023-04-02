@@ -32,7 +32,13 @@
                     color: themed('textColor');
                 }
             }
-
+            .overviewImg {
+                img {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                }
+            }
             hr {
                 margin: 20px 0px;
                 border: none;

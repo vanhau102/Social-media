@@ -1,6 +1,7 @@
 import express from "express";
 import cors from 'cors';
 import cookieParser from "cookie-parser";
+import multer from "multer";
 
 import router from "./router/index.js";
 
@@ -23,7 +24,23 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(cookieParser());
 
+//Multer Upload file
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../client/public/upload/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + file.originalname)
+    }
+})
+
+const upload = multer({ storage: storage })
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+    const file = req.file;
+    res.status(200).json(file.filename);
+})
 //Router init
 router(app);
 
