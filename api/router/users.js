@@ -1,11 +1,10 @@
 import express from 'express';
+import { getUser } from '../controllers/user.js';
 
 const router = express.Router();
 
 
-router.get("/test", (req, res) => {
-    res.send('nay la user ne');
-})
+router.get("/find/:userId", getUser)
 
 
 

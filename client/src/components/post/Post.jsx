@@ -42,7 +42,6 @@ function Post({ post }) {
         e.preventDefault();
         mutation.mutate(data?.includes(currentUser.id));
     };
-    console.log(data);
     return (
         <div className='post'>
             <div className='container'>
@@ -50,7 +49,10 @@ function Post({ post }) {
                     <div className='userInfo'>
                         <img src={post.profilePic} alt={post.name} />
                         <div className='details'>
-                            <Link to={post.userID} className='link'>
+                            <Link
+                                to={`/profile/${post.userId}`}
+                                className='link'
+                            >
                                 <span className='name'>{post.name}</span>
                             </Link>
                             <span className='date'>
