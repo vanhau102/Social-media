@@ -4,11 +4,11 @@ import { makeRequest } from '../../httpRequest';
 import Post from '../post/Post';
 import './posts.scss';
 
-function Posts() {
+function Posts({ userId }) {
     const { isLoading, error, data } = useQuery({
         queryKey: ['posts'],
         queryFn: () =>
-            makeRequest.get('/posts').then((res) => {
+            makeRequest.get('/posts?userId=' + userId).then((res) => {
                 return res.data;
             }),
     });
@@ -18,7 +18,7 @@ function Posts() {
                 ? ' Something went wrong!'
                 : isLoading
                 ? ' Loading...'
-                : data.map((post, index) => <Post post={post} key={post.id} />)}
+                : data.map((post) => <Post post={post} key={post.id} />)}
         </div>
     );
 }
