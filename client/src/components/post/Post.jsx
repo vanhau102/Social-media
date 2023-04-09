@@ -13,8 +13,10 @@ import './post.scss';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../httpRequest';
 import { AuthContext } from '../../context/authContext';
+import { Button } from '@mui/material';
 function Post({ post }) {
     const [commentOpen, setCommentOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const { currentUser } = useContext(AuthContext);
 
     const { isLoading, error, data } = useQuery({
@@ -37,10 +39,23 @@ function Post({ post }) {
             },
         }
     );
+    const deleteMutation = useMutation(
+        (postId) => {
+            return makeRequest.delete('/posts/' + postId);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(['posts']);
+            },
+        }
+    );
 
     const handleLike = async (e) => {
-        e.preventDefault();
         mutation.mutate(data?.includes(currentUser.id));
+    };
+    const handleDelete = async (e) => {
+        deleteMutation.mutate(post.id);
     };
     return (
         <div className='post'>
@@ -60,11 +75,12 @@ function Post({ post }) {
                             </span>
                         </div>
                     </div>
-                    <MoreHorizIcon />
+                    <MoreHorizIcon onClick={() => setMenuOpen(true)} />
+                    {menuOpen && <button onClick={handleDelete}>Delete</button>}
                 </div>
                 <div className='content'>
                     <p>{post.desc}</p>
-                    <img src={`./upload/${post.img}`} alt='' />
+                    <img src={`/upload/${post.img}`} alt='' />
                 </div>
                 <div className='info'>
                     <div className='item'>

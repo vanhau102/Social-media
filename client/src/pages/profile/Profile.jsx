@@ -70,9 +70,13 @@ function Profile() {
             ) : (
                 <>
                     <div className='images'>
-                        <img src={data?.coverPic} alt='' className='cover' />
                         <img
-                            src={data?.profilePic}
+                            src={'/upload/' + data.coverPic}
+                            alt=''
+                            className='cover'
+                        />
+                        <img
+                            src={'/upload/' + data.profilePic}
                             alt=''
                             className='profilePic'
                         />
@@ -132,7 +136,7 @@ function Profile() {
                     </div>
                 </>
             )}
-            {openUpdate && <Update setOpenUpdate={setOpenUpdate} />}
+            {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
         </div>
     );
 }
