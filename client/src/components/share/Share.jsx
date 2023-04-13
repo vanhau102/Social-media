@@ -51,7 +51,7 @@ const Share = () => {
         <div className='share'>
             <div className='container'>
                 <div className='top'>
-                    <img src={currentUser.profilePic} alt='' />
+                    <img src={`/upload/${currentUser.profilePic}`} alt='' />
 
                     <input
                         type='text'

@@ -5,6 +5,7 @@ import storyRoutes from "./stories.js";
 import likeRoutes from "./likes.js";
 import commentRoutes from "./comments.js";
 import relationshipsRoutes from "./relationships.js";
+import siteRoutes from "./site.js";
 
 function router(app) {
     app.use("/api/auth/", authRoutes);
@@ -14,6 +15,7 @@ function router(app) {
     app.use("/api/likes/", likeRoutes);
     app.use("/api/comments/", commentRoutes);
     app.use("/api/relationships/", relationshipsRoutes);
+    app.use("/api/search/", siteRoutes);
 }
 
 export default router;
