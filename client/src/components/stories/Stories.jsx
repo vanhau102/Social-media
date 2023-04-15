@@ -2,6 +2,7 @@ import { useContext } from 'react';
 
 import './stories.scss';
 import { AuthContext } from '../../context/authContext';
+import { useSelector } from 'react-redux';
 //TEMPORARY
 const stories = [
     {
@@ -26,15 +27,12 @@ const stories = [
     },
 ];
 function Stories() {
-    const { currentUser } = useContext(AuthContext);
+    const user = useSelector((state) => state.user.currentUser);
     return (
         <div className='stories'>
             <div className='story'>
-                <img
-                    src={`/upload/${currentUser.profilePic}`}
-                    alt={currentUser.name}
-                />
-                <span>{currentUser.name}</span>
+                <img src={`/upload/${user.profilePic}`} alt={user.name} />
+                <span>{user.name}</span>
                 <button>+</button>
             </div>
             {stories.map((story) => (

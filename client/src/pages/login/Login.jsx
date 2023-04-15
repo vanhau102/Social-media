@@ -1,6 +1,10 @@
+import { current } from '@reduxjs/toolkit';
 import { useState, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
+import { makeRequest } from '../../httpRequest';
+import { loginFailed, loginStart, loginSuccess } from '../../store/userSlice';
 import './login.scss';
 
 export default function Login() {
@@ -10,7 +14,10 @@ export default function Login() {
         password: '',
     });
     const [err, setErr] = useState(null);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    // const dispatch = useDispatch();
+
     const handleChange = (e) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
@@ -18,9 +25,21 @@ export default function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await login(inputs);
-            navigate('/');
+            dispatch(loginStart());
+
+            const res = await makeRequest.post('/auth/login', inputs, {
+                withCredentials: true,
+            });
+            if (res.status === 200) {
+                dispatch(loginSuccess({ currentUser: res.data }));
+                navigate('/');
+            }
+            setInputs({
+                username: '',
+                password: '',
+            });
         } catch (err) {
+            dispatch(loginFailed());
             setErr(err.response.data);
         }
     };

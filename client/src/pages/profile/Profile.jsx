@@ -11,21 +11,22 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { makeRequest } from '../../httpRequest';
 
+import { makeRequest } from '../../httpRequest';
 import { AuthContext } from '../../context/authContext';
 import Posts from '../../components/posts';
 import './profile.scss';
 import Update from '../../components/update/Update';
+import { useSelector } from 'react-redux';
 
 function Profile() {
     const [openUpdate, setOpenUpdate] = useState(false);
+    const user = useSelector((state) => state.user.currentUser);
 
-    const { currentUser } = useContext(AuthContext);
     const userId = parseInt(useLocation().pathname.split('/')[2]);
 
     const { isLoading, error, data } = useQuery({
-        queryKey: ['user'],
+        queryKey: ['users'],
         queryFn: () =>
             makeRequest.get('/users/find/' + userId).then((res) => {
                 return res.data;
@@ -60,7 +61,7 @@ function Profile() {
 
     const handleFollow = async (e) => {
         e.preventDefault();
-        mutation.mutate(relationshipsData?.includes(currentUser.id));
+        mutation.mutate(relationshipsData?.includes(user.id));
     };
 
     return (
@@ -113,15 +114,13 @@ function Profile() {
                                 </div>
                                 {rIsLoading ? (
                                     'Loading'
-                                ) : userId === currentUser.id ? (
+                                ) : userId === user.id ? (
                                     <button onClick={() => setOpenUpdate(true)}>
                                         Update
                                     </button>
                                 ) : (
                                     <button onClick={handleFollow}>
-                                        {relationshipsData?.includes(
-                                            currentUser.id
-                                        )
+                                        {relationshipsData?.includes(user.id)
                                             ? 'Following'
                                             : 'Follow'}
                                     </button>

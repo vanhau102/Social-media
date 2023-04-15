@@ -27,19 +27,14 @@ function Search() {
                 );
                 setSearchResult(result.data);
             }
-            // console.log(result);
-            // setLoading(false);
         };
         fetchApi();
     }, [inputValue]);
-
-    console.log(searchResult);
 
     return (
         <Tippy
             interactive
             placement='bottom'
-            trigger='click'
             visible={searchResult.length > 0}
             render={(attrs) => (
                 <div className='search-result' tabIndex='-1' {...attrs}>
@@ -47,7 +42,7 @@ function Search() {
                         <h3>Account</h3>
                         {searchResult &&
                             searchResult.map((result) => (
-                                <Link to={`profile/${result.id}`}>
+                                <Link to={`/profile/${result.id}`}>
                                     <AccountItem
                                         key={result.id}
                                         data={result}

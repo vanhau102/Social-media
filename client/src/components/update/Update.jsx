@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { makeRequest } from '../../httpRequest';
+import { replaceUserData } from '../../store/userSlice';
 
 import './update.scss';
 
@@ -12,7 +15,8 @@ function Update({ user, setOpenUpdate }) {
         city: '',
         website: '',
     });
-    console.log(coverPic, profilePic);
+
+    const dispatch = useDispatch();
 
     const upload = async (file) => {
         try {
@@ -28,7 +32,11 @@ function Update({ user, setOpenUpdate }) {
     const queryClient = useQueryClient();
     const mutation = useMutation({
         mutationFn: (user) => {
-            return makeRequest.put('/users', user);
+            makeRequest.put('/users', user).then((res) => {
+                if (res.status === 200) {
+                    dispatch(replaceUserData(res.data[0]));
+                }
+            });
         },
         onSuccess: () => {
             // Invalidate and refetch
@@ -42,14 +50,12 @@ function Update({ user, setOpenUpdate }) {
         let profilePicURL = profilePic
             ? await upload(profilePic)
             : user.profilePic;
-
-        console.log(coverPicURL, profilePicURL);
-
         mutation.mutate({
             ...texts,
             coverPic: coverPicURL,
             profilePic: profilePicURL,
         });
+
         setTexts('');
         setCoverPic(null);
         setProfilePic(null);

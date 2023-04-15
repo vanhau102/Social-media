@@ -3,20 +3,21 @@ import {
   Navigate,
   Outlet,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 import { useContext } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { DarkModeContext } from "./context/darkModeContext";
-import { AuthContext } from "./context/authContext";
 import Navbar from "./components/navbar";
 import LeftBar from "./components/leftbar";
 import RightBar from "./components/rightbar";
 import config from "./config";
+import { useSelector } from "react-redux";
 
 function App() {
-
-  const { currentUser } = useContext(AuthContext);
+  // const navigate = useNavigate()
+  const user = useSelector((state) => state.user.currentUser);
   const { darkMode } = useContext(DarkModeContext);
   const queryClient = new QueryClient()
   const Layout = () => {
@@ -36,21 +37,21 @@ function App() {
     );
   };
 
-  const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
+  // const ProtectedRoute = ({ children }) => {
+  //   if (user === {}) {
+  //     navigate("/login")
+  //   }
 
-    return children;
-  };
+  //   return children;
+  // };
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: !user ? "/login" : "/",
       element: (
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
+
+        <Layout />
+
       ),
       children: [
         {

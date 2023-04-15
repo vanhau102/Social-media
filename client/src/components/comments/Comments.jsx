@@ -6,11 +6,11 @@ import './comments.scss';
 import { AuthContext } from '../../context/authContext';
 import { makeRequest } from '../../httpRequest';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function Comments({ postId }) {
+    const user = useSelector((state) => state.user.currentUser);
     const [desc, setDesc] = useState('');
-
-    const { currentUser } = useContext(AuthContext);
     const { isLoading, error, data } = useQuery({
         queryKey: ['comments'],
         queryFn: () =>
@@ -41,7 +41,7 @@ function Comments({ postId }) {
     return (
         <div className='comments'>
             <div className='write'>
-                <img src={currentUser.profilePic} alt={currentUser.name} />
+                <img src={`/upload/${user.profilePic}`} alt={user.name} />
                 <input
                     type='text'
                     placeholder='write a comment'
@@ -51,7 +51,10 @@ function Comments({ postId }) {
             </div>
             {data?.map((comment) => (
                 <div className='comment' key={comment.id}>
-                    <img src={comment.profilePic} alt={comment.name} />
+                    <img
+                        src={`/upload/${comment.profilePic}`}
+                        alt={comment.name}
+                    />
                     <div className='info'>
                         <span>{comment.name}</span>
                         <p>{comment.desc}</p>

@@ -12,12 +12,12 @@ import Comments from '../comments/Comments';
 import './post.scss';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../httpRequest';
-import { AuthContext } from '../../context/authContext';
 import { Button } from '@mui/material';
+import { useSelector } from 'react-redux';
 function Post({ post }) {
     const [commentOpen, setCommentOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const { currentUser } = useContext(AuthContext);
+    const user = useSelector((state) => state.user.currentUser);
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['likes', post.id],
@@ -52,7 +52,7 @@ function Post({ post }) {
     );
 
     const handleLike = async (e) => {
-        mutation.mutate(data?.includes(currentUser.id));
+        mutation.mutate(data?.includes(user.id));
     };
     const handleDelete = async (e) => {
         deleteMutation.mutate(post.id);
@@ -89,7 +89,7 @@ function Post({ post }) {
                     <div className='item'>
                         {isLoading ? (
                             'Loading'
-                        ) : data?.includes(currentUser.id) ? (
+                        ) : data?.includes(user.id) ? (
                             <FavoriteOutlinedIcon
                                 style={{ color: 'red' }}
                                 onClick={handleLike}

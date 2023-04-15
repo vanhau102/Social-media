@@ -24,7 +24,7 @@ export const updateUser = (req, res) => {
     jwt.verify(token, "secretKey", (err, userInfo) => {
         if (err) return res.status(403).json("Token is not valid!");
 
-        const q = "update users set `name` = ? , `city`=? , `website`= ?, `profilePic`=? , `coverPic`= ? where id = ?"
+        const qUpdate = "update users set `name` = ? , `city`=? , `website`= ?, `profilePic`=? , `coverPic`= ? where id = ?"
 
         const values = [
             req.body.name,
@@ -35,10 +35,16 @@ export const updateUser = (req, res) => {
             userInfo.id
         ]
 
-        db.query(q, values, (err, data) => {
-            if (err) return res.status(500).json(err)
-            if (data.affectedRows > 0) return res.json("Updated!")
-            return res.status(403).json("You can update only your post!")
+        db.query(qUpdate, values, (err, result) => {
+            if (err) { return res.status(500).json(err); }
+            if (result.affectedRows > 0) {
+                const q = " select * from users where id = ?"
+                db.query(q, [userInfo.id], (err, result) => {
+
+                    return res.json(result)
+                })
+            }
+
         })
     })
 }

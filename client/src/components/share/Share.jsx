@@ -7,12 +7,12 @@ import Map from '../../assets/map.png';
 import Friend from '../../assets/friend.png';
 import { AuthContext } from '../../context/authContext';
 import { makeRequest } from '../../httpRequest';
+import { useSelector } from 'react-redux';
 
 const Share = () => {
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState('');
-
-    const { currentUser } = useContext(AuthContext);
+    const user = useSelector((state) => state.user.currentUser);
 
     const upload = async (req, res) => {
         try {
@@ -51,11 +51,11 @@ const Share = () => {
         <div className='share'>
             <div className='container'>
                 <div className='top'>
-                    <img src={`/upload/${currentUser.profilePic}`} alt='' />
+                    <img src={`/upload/${user.profilePic}`} alt='' />
 
                     <input
                         type='text'
-                        placeholder={`What's on your mind ${currentUser.name}?`}
+                        placeholder={`What's on your mind ${user.name}?`}
                         onChange={(e) => setDesc(e.target.value)}
                     />
                 </div>
