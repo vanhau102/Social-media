@@ -22,8 +22,11 @@ function LeftBar() {
             <div className='container'>
                 <div className='menu'>
                     <div className='user'>
-                        <img src={`/upload/${user.profilePic}`} alt='avatar' />
-                        <span>{user.name}</span>
+                        <img
+                            src={`/upload/${user && user.profilePic}`}
+                            alt='avatar'
+                        />
+                        <span>{user && user.name}</span>
                     </div>
                     <div className='item'>
                         <img src={Friends} alt='' />

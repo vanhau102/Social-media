@@ -12,7 +12,6 @@ import Comments from '../comments/Comments';
 import './post.scss';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../httpRequest';
-import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 function Post({ post }) {
     const [commentOpen, setCommentOpen] = useState(false);
@@ -78,8 +77,10 @@ function Post({ post }) {
                             </span>
                         </div>
                     </div>
-                    <MoreHorizIcon onClick={() => setMenuOpen(true)} />
-                    {menuOpen && <button onClick={handleDelete}>Delete</button>}
+                    <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
+                    {menuOpen && post.userId === user.id && (
+                        <button onClick={handleDelete}>Delete</button>
+                    )}
                 </div>
                 <div className='content'>
                     <p>{post.desc}</p>
@@ -104,7 +105,7 @@ function Post({ post }) {
                         onClick={() => setCommentOpen(!commentOpen)}
                     >
                         <TextsmsOutlinedIcon />
-                        12 Comments
+                        See Comments
                     </div>
                     <div className='item'>
                         <ShareOutlinedIcon />

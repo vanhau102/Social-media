@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import ReactPlayer from 'react-player';
 
 import './stories.scss';
 import { AuthContext } from '../../context/authContext';
@@ -39,6 +39,14 @@ function Stories() {
                 <div className='story' key={story.id}>
                     <img src={story.img} alt={story.name} />
                     <span>{story.name}</span>
+                    {/* <ReactPlayer
+                        className='video'
+                        url='https://www.youtube.com/watch?v=KKc_RMln5UY'
+                        width='100%'
+                        height='100%'
+                        playing={true}
+                        controls={false}
+                    /> */}
                 </div>
             ))}
         </div>

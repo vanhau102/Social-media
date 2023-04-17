@@ -13,19 +13,21 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import './navbar.scss';
 import { DarkModeContext } from '../../context/darkModeContext';
 
-import { AuthContext } from '../../context/authContext';
 import Search from '../Search/Search';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeRequest } from '../../httpRequest';
+import { logout } from '../../store/userSlice';
 
 function Navbar() {
     const user = useSelector((state) => state.user.currentUser);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { toggle, darkMode } = useContext(DarkModeContext);
     const handleLogout = async () => {
         const res = await makeRequest.post('/auth/logout');
         if (res.status === 200) {
+            dispatch(logout());
             navigate('/login');
         }
     };

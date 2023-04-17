@@ -55,6 +55,7 @@ const Share = () => {
 
                     <input
                         type='text'
+                        value={desc}
                         placeholder={`What's on your mind ${user.name}?`}
                         onChange={(e) => setDesc(e.target.value)}
                     />

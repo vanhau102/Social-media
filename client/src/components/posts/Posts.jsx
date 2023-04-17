@@ -1,24 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { makeRequest } from '../../httpRequest';
 
 import Post from '../post/Post';
 import './posts.scss';
 
 function Posts({ userId }) {
-    const { isLoading, error, data } = useQuery({
-        queryKey: ['posts'],
-        queryFn: () =>
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const getPosts = () => {
             makeRequest.get('/posts?userId=' + userId).then((res) => {
-                return res.data;
-            }),
-    });
+                setData(res.data);
+            });
+        };
+        getPosts();
+    }, [userId, data]);
     return (
         <div className='posts'>
-            {error
-                ? ' Something went wrong!'
-                : isLoading
-                ? ' Loading...'
-                : data.map((post) => <Post post={post} key={post.id} />)}
+            {data && data.map((post) => <Post post={post} key={post.id} />)}
         </div>
     );
 }

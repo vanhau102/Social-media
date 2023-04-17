@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import './register.scss';
@@ -11,6 +11,7 @@ function Register() {
         password: '',
         name: '',
     });
+    const navigate = useNavigate();
     const [err, setErr] = useState(null);
 
     const handleChange = (e) => {
@@ -21,6 +22,7 @@ function Register() {
         e.preventDefault();
         try {
             await axios.post('http://localhost:5000/api/auth/register', inputs);
+            navigate('/login');
         } catch (err) {
             setErr(err.response.data);
         }

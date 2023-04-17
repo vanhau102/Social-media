@@ -16,7 +16,6 @@ import config from "./config";
 import { useSelector } from "react-redux";
 
 function App() {
-  // const navigate = useNavigate()
   const user = useSelector((state) => state.user.currentUser);
   const { darkMode } = useContext(DarkModeContext);
   const queryClient = new QueryClient()
@@ -37,21 +36,22 @@ function App() {
     );
   };
 
-  // const ProtectedRoute = ({ children }) => {
-  //   if (user === {}) {
-  //     navigate("/login")
-  //   }
 
-  //   return children;
-  // };
+  const ProtectedRoute = ({ children }) => {
+    if (user === null) {
+      return <Navigate to="/login" />;
+    }
+
+    return children;
+  };
 
   const router = createBrowserRouter([
     {
-      path: !user ? "/login" : "/",
+      path: "/",
       element: (
-
-        <Layout />
-
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
       ),
       children: [
         {

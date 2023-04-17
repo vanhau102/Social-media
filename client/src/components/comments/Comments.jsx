@@ -1,9 +1,7 @@
-import { useContext } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import moment from 'moment';
 
 import './comments.scss';
-import { AuthContext } from '../../context/authContext';
 import { makeRequest } from '../../httpRequest';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -41,7 +39,10 @@ function Comments({ postId }) {
     return (
         <div className='comments'>
             <div className='write'>
-                <img src={`/upload/${user.profilePic}`} alt={user.name} />
+                <img
+                    src={`/upload/${user && user.profilePic}`}
+                    alt={user && user?.name}
+                />
                 <input
                     type='text'
                     placeholder='write a comment'

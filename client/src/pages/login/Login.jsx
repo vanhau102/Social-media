@@ -1,14 +1,11 @@
-import { current } from '@reduxjs/toolkit';
-import { useState, useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/authContext';
 import { makeRequest } from '../../httpRequest';
 import { loginFailed, loginStart, loginSuccess } from '../../store/userSlice';
 import './login.scss';
 
 export default function Login() {
-    const { login } = useContext(AuthContext);
     const [inputs, setInputs] = useState({
         username: '',
         password: '',
@@ -31,13 +28,18 @@ export default function Login() {
                 withCredentials: true,
             });
             if (res.status === 200) {
-                dispatch(loginSuccess({ currentUser: res.data }));
-                navigate('/');
+                dispatch(
+                    loginSuccess({
+                        currentUser: res.data,
+                        token: res.data.token,
+                    })
+                );
             }
             setInputs({
                 username: '',
                 password: '',
             });
+            navigate('/');
         } catch (err) {
             dispatch(loginFailed());
             setErr(err.response.data);

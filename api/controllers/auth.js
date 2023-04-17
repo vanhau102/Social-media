@@ -52,7 +52,7 @@ export const login = (req, res) => {
         const token = jwt.sign({ id: data[0].id }, "secretKey");
         res.cookie("accessToken", token, {
             httpOnly: true,
-        }).status(200).json(others);
+        }).status(200).json({ ...others, token });
     })
 
 }

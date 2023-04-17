@@ -13,9 +13,9 @@ root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <DarkModeContextProvider>
-      <AuthContextProvider>
-        <App />
-      </AuthContextProvider>
+      {/* <AuthContextProvider> */}
+      <App />
+      {/* </AuthContextProvider> */}
     </DarkModeContextProvider>
   </Provider >
   // </React.StrictMode>
