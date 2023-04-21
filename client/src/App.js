@@ -62,7 +62,12 @@ function App() {
           path: config.routes.profile.path,
           element: config.routes.profile.element,
         },
+
       ],
+    },
+    {
+      path: config.routes.chat.path,
+      element: config.routes.chat.element,
     },
     {
       path: config.routes.login.path,

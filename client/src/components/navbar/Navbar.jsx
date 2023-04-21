@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Tippy from '@tippyjs/react';
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -9,12 +11,11 @@ import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import MessageIcon from '@mui/icons-material/Message';
 
 import './navbar.scss';
 import { DarkModeContext } from '../../context/darkModeContext';
-
 import Search from '../Search/Search';
-import { useDispatch, useSelector } from 'react-redux';
 import { makeRequest } from '../../httpRequest';
 import { logout } from '../../store/userSlice';
 
@@ -48,7 +49,12 @@ function Navbar() {
             </div>
             <div className='right'>
                 <PersonOutlinedIcon />
-                <EmailOutlinedIcon />
+                {/* <MessageIcon onClick={() => setShowMessage(!showMessage)} /> */}
+                <Tippy delay={[0, 50]} content='Message' placement='bottom'>
+                    <Link to={`/chats`} className='link'>
+                        <MessageIcon />
+                    </Link>
+                </Tippy>
                 <NotificationsOutlinedIcon />
                 <LogoutOutlinedIcon onClick={handleLogout} />
                 <Link to={`/profile/${user.id}`} className='user link'>

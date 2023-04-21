@@ -6,18 +6,34 @@ import Post from '../post/Post';
 import './posts.scss';
 
 function Posts({ userId }) {
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        const getPosts = () => {
-            makeRequest.get('/posts?userId=' + userId).then((res) => {
-                setData(res.data);
-            });
-        };
-        getPosts();
-    }, [userId, data]);
+    // const [data, setData] = useState([]);
+    // useEffect(() => {
+    //     const getPosts = () => {
+    //         makeRequest.get('/posts?userId=' + userId).then((res) => {
+    //             setData(res.data);
+    //         });
+    //     };
+    //     getPosts();
+    // }, [userId]);
+    // return (
+    //     <div className='posts'>
+    //         {data &&
+    //             data.map((post, index) => <Post post={post} key={index} />)}
+    //     </div>
+    // );
+    const { isLoading, error, data } = useQuery(['posts'], () =>
+        makeRequest.get('/posts?userId=' + userId).then((res) => {
+            return res.data;
+        })
+    );
+
     return (
         <div className='posts'>
-            {data && data.map((post) => <Post post={post} key={post.id} />)}
+            {error
+                ? 'Something went wrong!'
+                : isLoading
+                ? 'loading'
+                : data.map((post) => <Post post={post} key={post.id} />)}
         </div>
     );
 }
