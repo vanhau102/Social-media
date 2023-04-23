@@ -2,9 +2,13 @@ import './contacts.scss';
 import Logo from '../../../../assets/logo.svg';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-function Contacts({ contacts, changeCurrentChat }) {
+function Contacts({ contacts, changeChat }) {
     const user = useSelector((state) => state.user.currentUser);
     const [currentSelected, setCurrentSelected] = useState(undefined);
+    const changeCurrentChat = (index, contact) => {
+        setCurrentSelected(index);
+        changeChat(contact);
+    };
     return (
         <div className='contacts'>
             <div className='brand'>

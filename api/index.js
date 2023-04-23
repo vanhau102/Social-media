@@ -45,6 +45,6 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 router(app);
 
 
-app.listen(5000, () => {
+const server = app.listen(5000, () => {
     console.log("API working !");
 })

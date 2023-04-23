@@ -1,30 +1,48 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { makeRequest } from '../../../../httpRequest';
 import ChatInput from '../ChatInput/ChatInput';
 import './chatContainer.scss';
 
-function ChatContainer() {
+function ChatContainer({ currentChat }) {
+    const user = useSelector((state) => state.user.currentUser);
+    const [messages, setMessages] = useState([]);
+    const handleSendMsg = (msg) => {
+        makeRequest.post('/messages', {
+            message: msg,
+            receiverId: currentChat.id,
+        });
+    };
+
+    useEffect(() => {
+        makeRequest
+            .get('/messages?receiverId=' + currentChat.id)
+            .then((res) => {
+                setMessages(res.data);
+            });
+    }, [currentChat]);
     return (
         <div className='chatContainer'>
             <div className='chat-header'>
                 <div className='user-details'>
                     <div className='avatar'>
-                        <img
-                            // src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-                            alt=''
-                        />
+                        <img src={`/upload/${currentChat.profilePic}`} alt='' />
                     </div>
                     <div className='username'>
-                        <h3>Dino</h3>
+                        <h3>{currentChat?.name}</h3>
                     </div>
                 </div>
                 {/* <Logout /> */}
             </div>
             <div className='chat-messages'>
-                {/* {messages.map((message) => {
+                {messages.map((message) => {
                     return (
-                        <div ref={scrollRef} key={uuidv4()}>
+                        <div key={message.id}>
                             <div
                                 className={`message ${
-                                    message.fromSelf ? 'sended' : 'recieved'
+                                    user.id === message.senderId
+                                        ? 'sended'
+                                        : 'recieved'
                                 }`}
                             >
                                 <div className='content '>
@@ -33,9 +51,9 @@ function ChatContainer() {
                             </div>
                         </div>
                     );
-                })} */}
+                })}
             </div>
-            <ChatInput />
+            <ChatInput handleSendMsg={handleSendMsg} />
         </div>
     );
 }
