@@ -1,7 +1,6 @@
 import ReactPlayer from 'react-player';
 
 import './stories.scss';
-import { AuthContext } from '../../context/authContext';
 import { useSelector } from 'react-redux';
 //TEMPORARY
 const stories = [

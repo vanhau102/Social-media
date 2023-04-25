@@ -2,8 +2,8 @@ import express from "express";
 import cors from 'cors';
 import cookieParser from "cookie-parser";
 import multer from "multer";
-
 import router from "./router/index.js";
+import { Server } from "socket.io";
 
 const app = express();
 
@@ -48,3 +48,28 @@ router(app);
 const server = app.listen(5000, () => {
     console.log("API working !");
 })
+
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+    },
+})
+
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+    console.log('a user connected.');
+
+    global.chatSocket = socket;
+    socket.on("add-user", (userId) => {
+        console.log(userId);
+        onlineUsers.set(userId, socket.id);
+    });
+
+    socket.on("send-msg", (data) => {
+        const sendUserSocket = onlineUsers.get(data.to);
+        console.log(sendUserSocket);
+        if (sendUserSocket) {
+            socket.to(sendUserSocket).emit("msg-recieve", data.message);
+        }
+    });
+});

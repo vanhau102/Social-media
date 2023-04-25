@@ -4,7 +4,6 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { DarkModeContextProvider } from './context/darkModeContext';
-import { AuthContextProvider } from './context/authContext';
 import { store } from './store'
 import { Provider } from 'react-redux'
 
@@ -13,9 +12,7 @@ root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <DarkModeContextProvider>
-      {/* <AuthContextProvider> */}
       <App />
-      {/* </AuthContextProvider> */}
     </DarkModeContextProvider>
   </Provider >
   // </React.StrictMode>

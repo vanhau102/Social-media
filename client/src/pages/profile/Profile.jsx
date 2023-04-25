@@ -13,7 +13,6 @@ import { useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { makeRequest } from '../../httpRequest';
-import { AuthContext } from '../../context/authContext';
 import Posts from '../../components/posts';
 import './profile.scss';
 import Update from '../../components/update/Update';

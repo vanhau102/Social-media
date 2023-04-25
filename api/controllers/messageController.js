@@ -15,7 +15,13 @@ export const getMessages = (req, res) => {
 
         db.query(q, [userInfo.id, receiverId, receiverId, userInfo.id], (err, data) => {
             if (err) return res.status(500).json(err);
-            return res.status(200).json(data);
+            const result = data.map((data) => {
+                return {
+                    fromSelf: data.senderId === userInfo.id,
+                    message: data.message
+                }
+            })
+            return res.status(200).json(result);
         });
     });
 }
@@ -29,7 +35,6 @@ export const addMessage = (req, res) => {
 
         const q = "insert into messages (`message`, `receiverId`, `senderId`, `createdAt`) values (?) "
 
-        console.log(req.body.message);
         const values = [
             req.body.message,
             req.body.receiverId,

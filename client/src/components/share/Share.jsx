@@ -5,7 +5,6 @@ import './share.scss';
 import Image from '../../assets/img.png';
 import Map from '../../assets/map.png';
 import Friend from '../../assets/friend.png';
-import { AuthContext } from '../../context/authContext';
 import { makeRequest } from '../../httpRequest';
 import { useSelector } from 'react-redux';
 
