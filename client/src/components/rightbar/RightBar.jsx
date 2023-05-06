@@ -1,11 +1,13 @@
 import './rightBar.scss';
+import {useTranslation} from "react-i18next";
 
 function RightBar() {
+    const {t} =useTranslation()
     return (
         <div className='rightBar'>
             <div className='container'>
                 <div className='item'>
-                    <span>Suggestions For You</span>
+                    <span>{t("suggestions for You")}</span>
                     <div className='user'>
                         <div className='userInfo'>
                             <img
@@ -15,8 +17,8 @@ function RightBar() {
                             <span>Dino</span>
                         </div>
                         <div className='buttons'>
-                            <button>Follow</button>
-                            <button>Dismiss</button>
+                            <button>{t("follow")}</button>
+                            <button>{t("delete")}</button>
                         </div>
                     </div>
                     <div className='user'>
@@ -28,13 +30,13 @@ function RightBar() {
                             <span>Dino</span>
                         </div>
                         <div className='buttons'>
-                            <button>Follow</button>
-                            <button>Dismiss</button>
+                            <button>{t("follow")}</button>
+                            <button>{t("delete")}</button>
                         </div>
                     </div>
                 </div>
                 <div className='item'>
-                    <span>Latest Activities </span>
+                    <span>{t("latest activities")}</span>
                     <div className='user'>
                         <div className='userInfo'>
                             <img
@@ -85,7 +87,7 @@ function RightBar() {
                     </div>
                 </div>
                 <div className='item'>
-                    <span>Online Friend</span>
+                    <span>{t("online friend")}</span>
                     <div className='user'>
                         <div className='userInfo'>
                             <img

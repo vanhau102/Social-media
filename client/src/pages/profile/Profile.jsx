@@ -10,14 +10,13 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import {  useEffect, useState } from 'react';
 
 import { makeRequest } from '../../httpRequest';
 import Posts from '../../components/posts';
 import './profile.scss';
 import Update from '../../components/update/Update';
-import { useSelector } from 'react-redux';
-import Post from '../../components/post/Post';
 
 function Profile() {
     const [openUpdate, setOpenUpdate] = useState(false);

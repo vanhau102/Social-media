@@ -15,8 +15,10 @@ import Courses from '../../assets/12.png';
 import Fund from '../../assets/13.png';
 
 import { useSelector } from 'react-redux';
+import {useTranslation} from "react-i18next"
 function LeftBar() {
     const user = useSelector((state) => state.user.currentUser);
+    const { t} = useTranslation();
     return (
         <div className='leftBar'>
             <div className='container'>
@@ -30,15 +32,15 @@ function LeftBar() {
                     </div>
                     <div className='item'>
                         <img src={Friends} alt='' />
-                        <span>Freinds</span>
+                        <span>{t("friends")}</span>
                     </div>
                     <div className='item'>
                         <img src={Groups} alt='' />
-                        <span>Groups</span>
+                        <span>{t("groups")}</span>
                     </div>
                     <div className='item'>
                         <img src={Market} alt='' />
-                        <span>Market</span>
+                        <span>{t("market")}</span>
                     </div>
                     <div className='item'>
                         <img src={Watch} alt='' />
@@ -46,22 +48,22 @@ function LeftBar() {
                     </div>
                     <div className='item'>
                         <img src={Memories} alt='' />
-                        <span>Memories</span>
+                        <span>{t("memories")}</span>
                     </div>
                     <hr />
                     <div className='menu'>
-                        <span>Your shortcuts</span>
+                        <span>{t("your shortcuts")}</span>
                         <div className='item'>
                             <img src={Events} alt='' />
-                            <span>Events</span>
+                            <span>{t("events")}</span>
                         </div>
                         <div className='item'>
                             <img src={Gaming} alt='' />
-                            <span>Gaming</span>
+                            <span>{t("gaming")}</span>
                         </div>
                         <div className='item'>
                             <img src={Gallery} alt='' />
-                            <span>Gallery</span>
+                            <span>{t("gallery")}</span>
                         </div>
                         <div className='item'>
                             <img src={Videos} alt='' />
@@ -69,23 +71,23 @@ function LeftBar() {
                         </div>
                         <div className='item'>
                             <img src={Messages} alt='' />
-                            <span>Messages</span>
+                            <span>{t("messages")}</span>
                         </div>
                     </div>
                     <hr />
                     <div className='menu'>
-                        <span>Others</span>
+                        <span>{t("others")}</span>
                         <div className='item'>
                             <img src={Tutorials} alt='' />
-                            <span>Tutorials</span>
+                            <span>{t("tutorials")}</span>
                         </div>
                         <div className='item'>
                             <img src={Courses} alt='' />
-                            <span>Courses</span>
+                            <span>{t("courses")}</span>
                         </div>
                         <div className='item'>
                             <img src={Fund} alt='' />
-                            <span>Fund</span>
+                            <span>{t("fund")}</span>
                         </div>
                     </div>
                 </div>

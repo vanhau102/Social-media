@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
+import {  useTranslation } from 'react-i18next';
+
 
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
@@ -12,11 +15,11 @@ import Comments from '../comments/Comments';
 import './post.scss';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../httpRequest';
-import { useSelector } from 'react-redux';
 function Post({ post }) {
     const [commentOpen, setCommentOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const user = useSelector((state) => state.user.currentUser);
+    const { t } = useTranslation() ;
 
     const { isLoading, error, data } = useQuery({
         queryKey: ['likes', post.id],
@@ -56,6 +59,8 @@ function Post({ post }) {
     const handleDelete = async (e) => {
         deleteMutation.mutate(post.id);
     };
+
+    
     return (
         <div className='post'>
             <div className='container'>
@@ -79,7 +84,7 @@ function Post({ post }) {
                     </div>
                     <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
                     {menuOpen && post.userId === user.id && (
-                        <button onClick={handleDelete}>Delete</button>
+                        <button onClick={handleDelete}>{t("delete")}</button>
                     )}
                 </div>
                 <div className='content'>
@@ -98,18 +103,18 @@ function Post({ post }) {
                         ) : (
                             <FavoriteBorderOutlinedIcon onClick={handleLike} />
                         )}
-                        {data?.length} Like
+                        {data?.length} {t("like")}
                     </div>
                     <div
                         className='item'
                         onClick={() => setCommentOpen(!commentOpen)}
                     >
                         <TextsmsOutlinedIcon />
-                        See Comments
+                        {t("see comments")}
                     </div>
                     <div className='item'>
                         <ShareOutlinedIcon />
-                        12 Share
+                        {t("share")}
                     </div>
                 </div>
                 {commentOpen && <Comments postId={post.id} />}

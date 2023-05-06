@@ -1,6 +1,7 @@
 import Tippy from '@tippyjs/react/headless';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useTranslation } from "react-i18next";
 
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
@@ -10,11 +11,11 @@ import AccountItem from '../AccountItem';
 import { makeRequest } from '../../httpRequest';
 
 function Search() {
+    const {t}= useTranslation()
     const [searchResult, setSearchResult] = useState([]);
     const [searchValue, setSearchValue] = useState(null);
     const [showResult, setShowResult] = useState(false);
 
-    const navigate = useNavigate();
     useEffect(() => {
         // if (!debounceValue.trim()) {
         //     setSearchResult([]);
@@ -64,7 +65,7 @@ function Search() {
                 </button>
                 <input
                     type='text'
-                    placeholder='Search...'
+                    placeholder={t("search")}
                     onChange={(e) => setSearchValue(e.target.value)}
                     onFocus={() => setShowResult(true)}
                 />

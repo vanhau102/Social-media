@@ -57,19 +57,24 @@ const io = new Server(server, {
 
 global.onlineUsers = new Map();
 io.on("connection", (socket) => {
-    console.log('a user connected.');
 
     global.chatSocket = socket;
     socket.on("add-user", (userId) => {
-        console.log(userId);
         onlineUsers.set(userId, socket.id);
     });
 
     socket.on("send-msg", (data) => {
         const sendUserSocket = onlineUsers.get(data.to);
-        console.log(sendUserSocket);
         if (sendUserSocket) {
             socket.to(sendUserSocket).emit("msg-recieve", data.message);
         }
+    });
+    socket.on("sendNotification", ({ senderName, receiverName, type }) => {
+        const receiver = onlineUsers.get(receiverName);
+        console.log(type);
+        io.to(receiver.socketId).emit("getNotification", {
+            senderName,
+            type,
+        });
     });
 });

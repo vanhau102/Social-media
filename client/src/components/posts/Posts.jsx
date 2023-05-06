@@ -33,7 +33,7 @@ function Posts({ userId }) {
                 ? 'Something went wrong!'
                 : isLoading
                 ? 'loading'
-                : data.map((post) => <Post post={post} key={post.id} />)}
+                : data.map((post,index) => <Post post={post} key={index} />)}
         </div>
     );
 }

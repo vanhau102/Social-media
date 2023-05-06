@@ -21,6 +21,29 @@
                 font-size: 20px;
                 color: themed('logo');
             }
+            .list-language{
+                -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+                -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+                box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+                position: absolute;
+                top: 40px;
+                left: 230px;
+                width: 100px;
+                border: 1px solid lightgrey;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                .lang-title{
+                    padding: 5px 10px ;
+                    font-size: 14px;
+                    color: black;
+                    cursor: pointer;
+                    border-bottom: 1px solid lightgray;
+                    &:hover{
+                        background-color: rgba(225, 221, 221, 0.453);
+                    }
+                }
+            }
             .search-result {
                 width: 400px;
                 h3 {

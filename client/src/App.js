@@ -5,7 +5,7 @@ import {
   RouterProvider,
   useNavigate,
 } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { DarkModeContext } from "./context/darkModeContext";
@@ -14,8 +14,10 @@ import LeftBar from "./components/leftbar";
 import RightBar from "./components/rightbar";
 import config from "./config";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation()
   const user = useSelector((state) => state.user.currentUser);
   const { darkMode } = useContext(DarkModeContext);
   const queryClient = new QueryClient()

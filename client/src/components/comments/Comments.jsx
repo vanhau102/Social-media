@@ -5,8 +5,10 @@ import './comments.scss';
 import { makeRequest } from '../../httpRequest';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 function Comments({ postId }) {
+    const { t } = useTranslation()
     const user = useSelector((state) => state.user.currentUser);
     const [desc, setDesc] = useState('');
     const { isLoading, error, data } = useQuery({
@@ -45,10 +47,10 @@ function Comments({ postId }) {
                 />
                 <input
                     type='text'
-                    placeholder='write a comment'
+                    placeholder={`${t('write a comment')}`}
                     onChange={(e) => setDesc(e.target.value)}
                 />
-                <button onClick={handleClick}>Send</button>
+                <button onClick={handleClick}>{t("send")}</button>
             </div>
             {data?.map((comment) => (
                 <div className='comment' key={comment.id}>

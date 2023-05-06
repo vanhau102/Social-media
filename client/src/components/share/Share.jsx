@@ -1,17 +1,19 @@
 import { useContext, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import './share.scss';
 import Image from '../../assets/img.png';
 import Map from '../../assets/map.png';
 import Friend from '../../assets/friend.png';
 import { makeRequest } from '../../httpRequest';
-import { useSelector } from 'react-redux';
 
 const Share = () => {
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState('');
     const user = useSelector((state) => state.user.currentUser);
+    const { t } = useTranslation()
 
     const upload = async (req, res) => {
         try {
@@ -55,7 +57,7 @@ const Share = () => {
                     <input
                         type='text'
                         value={desc}
-                        placeholder={`What's on your mind ${user.name}?`}
+                        placeholder={`${t("what's on your mind")} ${user.name}?`}
                         onChange={(e) => setDesc(e.target.value)}
                     />
                 </div>
@@ -74,20 +76,21 @@ const Share = () => {
                         <label htmlFor='file'>
                             <div className='item'>
                                 <img src={Image} alt='' />
-                                <span>Add Image</span>
+                                <span>{t("add image")}</span>
                             </div>
                         </label>
                         <div className='item'>
                             <img src={Map} alt='' />
-                            <span>Add Place</span>
+                            <span>{t("add place")}</span>
+
                         </div>
                         <div className='item'>
                             <img src={Friend} alt='' />
-                            <span>Tag Friends</span>
+                            <span>{t("tag friend")}</span>
                         </div>
                     </div>
                     <div className='right'>
-                        <button onClick={handleClick}>Share</button>
+                        <button onClick={handleClick}>{t("share")}</button>
                     </div>
                 </div>
             </div>
